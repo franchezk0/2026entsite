@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ҰБТ 2026 — Ықтималдық Талдау Дашборды</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #151d30;
+            --bg-input: #1e2942;
+            --text-white: #ffffff;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            
+            --color-high: #ef4444;
+            --color-medium: #f97316;
+            --color-low: #eab308;
+            --color-spec: #3b82f6;
+            
+            --border-glow: rgba(56, 189, 248, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Style */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: radial-gradient(circle at center, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+            padding: 40px 20px;
+            border-radius: 24px;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+        }
+
+        .badge-live {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-live::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        header h1 {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 40%, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .meta-item {
+            background: rgba(30, 41, 66, 0.5);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .meta-item strong {
+            color: var(--text-white);
+        }
+
+        /* Navigation Menu */
+        .subject-nav {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            background: rgba(11, 15, 25, 0.8);
+            padding: 10px;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-white);
+            border-color: var(--accent-blue);
+            background: rgba(56, 189, 248, 0.05);
+        }
+
+        /* Subject Block */
+        .subject-section {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            scroll-margin-top: 100px;
+        }
+
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 24px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .subject-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-white); /* Pure White for Subject Names */
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .subject-stats {
+            display: flex;
+            gap: 16px;
+        }
+
+        .sub-stat {
+            background: var(--bg-input);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sub-stat strong {
+            color: var(--accent-blue);
+        }
+
+        /* Analytics Sub-sections */
+        .probability-group {
+            margin-bottom: 35px;
+        }
+
+        .group-title {
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .group-title.high { color: var(--color-high); }
+        .group-title.medium { color: var(--color-medium); }
+        .group-title.low { color: var(--color-low); }
+        .group-title.spec { color: var(--color-spec); }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(11, 15, 25, 0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        th {
+            background: rgba(30, 41, 66, 0.7);
+            padding: 16px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .topic-name {
+            font-weight: 600;
+            color: var(--text-white);
+        }
+
+        .probability-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .probability-badge.high { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .probability-badge.medium { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
+        .probability-badge.low { background: rgba(234, 179, 8, 0.15); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.3); }
+        .probability-badge.spec { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+        .date-list {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .sample-question {
+            font-size: 14px;
+            color: #cbd5e1;
+            background: rgba(30, 41, 66, 0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-blue);
+            max-width: 400px;
+            word-wrap: break-word;
+        }
+
+        /* Conclusion / Footer Card */
+        .footer-card {
+            background: linear-gradient(135deg, #1e1b4b 0%, #151d30 100%);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .footer-card h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .rec-item {
+            background: rgba(11, 15, 25, 0.5);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .rec-item h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rec-item p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .warning-box {
+            background: rgba(234, 179, 8, 0.06);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+            padding: 20px;
+            border-radius: 16px;
+            color: #fde047;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .wishing-text {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #4ade80;
+            margin-top: 20px;
+        }
+
+        /* Custom Responsive Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-input);
+            border-radius: 100px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue);
+        }
+
+        @media (max-width: 768px) {
+            .subject-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .subject-section {
+                padding: 20px;
+            }
+            body {
+                padding: 20px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <span class="badge-live">МАҢЫЗДЫ АНАЛИТИКА</span>
+        <h1>📊 ЕНТ 2026 — СЛИВТЕР БОЫНША ЫҚТИМАЛДЫҚ ТАЛДАУ</h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 15px;">
+            Сливтерде жиі қайталанатын тақырыптарды автоматты анықтау және ертеңгі емтиханға арналған нақты стратегия.
+        </p>
+        
+        <div class="meta-grid">
+            <div class="meta-item">📅 Есеп күні: <strong>01.07.2026</strong></div>
+            <div class="meta-item">📝 Емтихан күні: <strong>02.07.2026</strong></div>
+            <div class="meta-item">🔍 Дереккөз: <strong>Telegram / WhatsApp</strong></div>
+        </div>
+    </header>
+
+    <!-- Тез өту менюі -->
+    <nav class="subject-nav">
+        <a href="#djt" class="nav-btn">📘 Дүниежүзі тарихы</a>
+        <a href="#eng" class="nav-btn">📘 Ағылшын тілі</a>
+        <a href="#kzt" class="nav-btn">📘 Қазақстан тарихы</a>
+        <a href="#math" class="nav-btn">📘 Мат. сауаттылық</a>
+    </nav>
+
+    <!-- 1. ДҮНИЕЖҮЗІ ТАРИХЫ -->
+    <section class="subject-section" id="djt">
+        <div class="subject-header">
+            <div class="subject-title">📘 Дүниежүзі тарихы (ДжТ)</div>
+            <div class="subject-stats">
+                <div class="sub-stat">Жазбалар: <strong>156</strong></div>
+                <div class="sub-stat">Тақырыптар: <strong>40</strong></div>
+            </div>
+        </div>
+
+        <!-- 90-100% -->
+        <div class="probability-group">
+            <div class="group-title high">🔴 ӘР СЫНАҚТА КЕЛЕТІН (90-100%)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">№</th>
+                            <th>Тақырып</th>
+                            <th style="width: 100px;">Қайталануы</th>
+                            <th style="width: 120px;">Ықтималдық</th>
+                            <th>Кездескен күндер</th>
+                            <th>Мысал сұрақ / Контекст</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="topic-name">Бірінші дүниежүзілік соғыс</td>
+                            <td>11 рет</td>
+                            <td><span class="probability-badge high">100.0%</span></td>
+                            <td class="date-list">23.06, 27.06, 28.06</td>
+                            <td><div class="sample-question">Бірінші дүниежүзілік соғыс шайқастарын сәйкестендіру</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 60-89% -->
+        <div class="probability-group">
+            <div class="group-title medium">🟠 ЖИІЛІГІ ЖОҒАРЫ (60-89%)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">№</th>
+                            <th>Тақырып</th>
+                            <th style="width: 100px;">Қайталануы</th>
+                            <th style="width: 120px;">Ықтималдық</th>
+                            <th>Кездескен күндер</th>
+                            <th>Мысал сұрақ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="topic-name">АҚШ тәуелсіздігі, Азамат соғысы</td>
+                            <td>9 рет</td>
+                            <td><span class="probability-badge medium">81.8%</span></td>
+                            <td class="date-list">21.06, 24.06, 27.06, 28.06</td>
+                            <td><div class="sample-question">Екінші дүниежүзілік соғыс тұсында Біріккен Ұлттар Ұйымын (БҰҰ) құру мәселесі тал</div></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td class="topic-name">Осман империясы XIX ғ., Танзимат</td>
+                            <td>9 reter</td>
+                            <td><span class="probability-badge medium">81.8%</span></td>
+                            <td class="date-list">23.06, 24.06, 27.06</td>
+                            <td><div class="sample-question">Хронология: Түркіменчай келісімі (1828 жылы қол қойылды)</div></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td class="topic-name">Француз буржуазиялық революциясы, Наполеон</td>
+                            <td>8 рет</td>
+                            <td><span class="probability-badge medium">72.7%</span></td>
+                            <td class="date-list">24.06, 27.06, 28.06</td>
+                            <td><div class="sample-question">1789 жылғы революцияның бірінші кезеңінің нәтижесі: Абсолютизм құлады /Консти</div></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td class="topic-name">Қытай XIX ғ., Апиын соғыстары</td>
+                            <td>8 рет</td>
+                            <td><span class="probability-badge medium">72.7%</span></td>
+                            <td class="date-list">21.06, 23.06, 24.06, 27.06</td>
+                            <td><div class="sample-question">Нерчинск (1689 ж), Нанкин (1842 ж), Тяньцзинь (1858 ж), Пекин (1860 ж)</div></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td class="topic-name">Екінші дүниежүзілік соғыс</td>
+                            <td>8 рет</td>
+                            <td><span class="probability-badge medium">72.7%</span></td>
+                            <td class="date-list">21.06, 24.06, 27.06, 28.06</td>
+                            <td><div class="sample-question">Екінші дүниежүзілік соғыс кезіндегі Ялта және Потсдам конференциялары өткен мемл</div></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td class="topic-name">Қырғи-қабақ соғысы, НАТО, ВШҰ</td>
+                            <td>8 рет</td>
+                            <td><span class="probability-badge medium">72.7%</span></td>
+                            <td class="date-list">21.06, 27.06, 28.06</td>
+                            <td><div class="sample-question">ВШҰ: КСРО, Польша, ГДР; НАТО: АҚШ, Ұлыбритания, France</div></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td class="topic-name">Ағылшын буржуазиялық революциясы, өнеркәсіп төңкерісі</td>
+                            <td>7 рет</td>
+                            <td><span class="probability-badge medium">63.6%</span></td>
+                            <td class="date-list">21.06, 24.06, 27.06</td>
+                            <td><div class="sample-question">Өндірістік төңкеріске (машина өндірісіне) қарсы шыққан қозғалыс: Луддашылар қозғ</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 1-59% -->
+        <div class="probability-group">
+            <div class="group-title low">🟡 ОРТАША / ТӨМЕН ЖИІЛІК (1-59%)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">№</th>
+                            <th>Тақырып</th>
+                            <th style="width: 100px;">Қайталануы</th>
+                            <th style="width: 120px;">Ықтималдық</th>
+                            <th>Кездескен күндер</th>
+                            <th>Мысал сұрақ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="topic-name">Қытай XX ғ.: Гоминьдан, КПК, Мао</td><td>6</td><td><span class="probability-badge low">54.5%</span></td><td class="date-list">21.06, 23.06, 24.06, 28.06</td><td><div class="sample-question">Хронологиялық реттілік: Бірінші апиын соғысы...</div></td></tr>
+                        <tr><td>2</td><td class="topic-name">Империялар бәсекесі XIX ғ., Қырым соғысы</td><td>5</td><td><span class="probability-badge low">45.5%</span></td><td class="date-list">23.06, 24.06, 27.06</td><td><div class="sample-question">Иранның оңтүстігінде үстемдік еткен мемлекет: Англия</div></td></tr>
+                        <tr><td>3</td><td class="topic-name">ЕуропадағыDoc революциялық идеялар, Марксизм</td><td>5</td><td><span class="probability-badge low">45.5%</span></td><td class="date-list">23.06, 24.06, 28.06</td><td><div class="sample-question">19 ғасыр ортасында Италияны біріктіруді бастаған граф: Кавур</div></td></tr>
+                        <tr><td>4</td><td class="topic-name">Ресей XIX ғ., Декабристер, Халықшылдар</td><td>5</td><td><span class="probability-badge low">45.5%</span></td><td class="date-list">21.06, 23.06</td><td><div class="sample-question">Ресейдегі халықшылдар қозғалысының идеялық жетекшілері</div></td></tr>
+                        <tr><td>5</td><td class="topic-name">Ежелгі Грекия, Рим, Македонский, Персия</td><td>4</td><td><span class="probability-badge low">36.4%</span></td><td class="date-list">23.06, 24.06, 27.06</td><td><div class="sample-question">10 қауым (римдік куриялар) нені құрады: курия</div></td></tr>
+                        <tr><td>6</td><td class="topic-name">Абсолютизм (Шығыс): Қытай, Жапония, Осман</td><td>4</td><td><span class="probability-badge low">36.4%</span></td><td class="date-list">24.06, 27.06</td><td><div class="sample-question">XIX ғасырдағы Осман империясындағы оқиғалардың реті</div></td></tr>
+                        <tr><td>7</td><td class="topic-name">Ұлы географиялық ашулар, отарлау</td><td>4</td><td><span class="probability-badge low">36.4%</span></td><td class="date-list">23.06, 24.06, 27.06</td><td><div class="sample-question">БҰҰ Оңтүстік Африкаға санкция енгізген мемлекет</div></td></tr>
+                        <tr><td>8</td><td class="topic-name">БҰҰ, Еуропалық интеграция, Деколонизация</td><td>4</td><td><span class="probability-badge low">36.4%</span></td><td class="date-list">21.06, 23.06, 27.06, 28.06</td><td><div class="sample-question">Екінші дүниежүзілік соғыс тұсында БҰҰ құру мәселесі</div></td></tr>
+                        <tr><td>9</td><td class="topic-name">Контекст: Тарихи құжаттар</td><td>4</td><td><span class="probability-badge low">36.4%</span></td><td class="date-list">23.06, 24.06, 27.06, 28.06</td><td><div class="sample-question">Контекст тақырыбы: Ресейдегі декабристер қозғалысы</div></td></tr>
+                        <tr><td>10</td><td class="topic-name">Ежелгі Египет, Ежелгі Қосөзен</td><td>3</td><td><span class="probability-badge low">27.3%</span></td><td class="date-list">23.06, 27.06</td><td><div class="sample-question">Шумерліктердің ең көне дастаны: Гильгамеш туралы дастан</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Спецификация -->
+        <div class="probability-group">
+            <div class="group-title spec">🔵 СПЕЦИФИКАЦИЯ БОЙЫНША ТАҚЫРЫПТАР (Сливте жоқ)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">№</th>
+                            <th>Күтілетін Тақырып атауы</th>
+                            <th style="width: 150px;">Сливтегі саны</th>
+                            <th style="width: 150px;">Қауіп деңгейі</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="topic-name">Моңғол империясы, Шыңғысхан, Алтын Орда</td><td>0 рет</td><td><span class="probability-badge spec">Тосын сый болуы мүмкін</span></td></tr>
+                        <tr><td>2</td><td class="topic-name">Дүниежүзілік экономикалық дағдарыс, Рузвельт</td><td>0 рет</td><td><span class="probability-badge spec">Тосын сый болуы мүмкін</span></td></tr>
+                        <tr><td>3</td><td class="topic-name">ХХ ғ. ғылым-техника</td><td>0 рет</td><td><span class="probability-badge spec">Тосын сый болуы мүмкін</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. АҒЫЛШЫН ТІЛІ -->
+    <section class="subject-section" id="eng">
+        <div class="subject-header">
+            <div class="subject-title">📘 Ағылшын тілі</div>
+            <div class="subject-stats">
+                <div class="sub-stat">Жазбалар: <strong>84</strong></div>
+                <div class="sub-stat">Тақырыптар: <strong>18</strong></div>
+            </div>
+        </div>
+
+        <div class="probability-group">
+            <div class="group-title high">🔴 ӘР СЫНАҚТА КЕЛЕТІН (90-100%)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th style="width: 50px;">№</th><th>Тақырып</th><th style="width: 100px;">Саны</th><th style="width: 120px;">Ықтималдық</th><th>Күндер</th><th>Мысал</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="topic-name">Parts of speech: Nouns</td><td>11</td><td><span class="probability-badge high">100.0%</span></td><td>23.06 - 28.06</td><td><div class="sample-question">Pronouns және Clause</div></td></tr>
+                        <tr><td>2</td><td class="topic-name">Parts of speech: Verbs, Tenses</td><td>10</td><td><span class="probability-badge high">90.9%</span></td><td>21.06 - 27.06</td><td><div class="sample-question">Comparative adverb</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="probability-group">
+            <div class="group-title medium">🟠 ЖИІЛІГІ ЖОҒАРЫ (60-89%)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th style="width: 50px;">№</th><th>Тақырып</th><th style="width: 100px;">Саны</th><th style="width: 120px;">Ықтималдық</th><th>Күндер</th><th>Мысал</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="topic-name">Reported speech / Indirect speech</td><td>9</td><td><span class="probability-badge medium">81.8%</span></td><td>21.06 - 28.06</td><td><div class="sample-question">Reported speech кейстері</div></td></tr>
+                        <tr><td>2</td><td class="topic-name">Parts of speech: Adjectives, Adverbs</td><td>8</td><td><span class="probability-badge medium">72.7%</span></td><td>21.06 - 28.06</td><td><div class="sample-question">Find possessives in the sentences</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. ҚАЗАҚСТАН ТАРИХЫ -->
+    <section class="subject-section" id="kzt">
+        <div class="subject-header">
+            <div class="subject-title">📘 Қазақстан тарихы</div>
+            <div class="subject-stats">
+                <div class="sub-stat">Жазбалар: <strong>148</strong></div>
+                <div class="sub-stat">Тақырыптар: <strong>19</strong></div>
+            </div>
+        </div>
+
+        <div class="probability-group">
+            <div class="group-title high">🔴 ӘР СЫНАҚТА КЕЛЕТІН (90-100%)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th style="width: 50px;">№</th><th>Тақырып</th><th style="width: 100px;">Саны</th><th style="width: 120px;">Ықтималдық</th><th>Күндер</th><th>Мысал сұрақ</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="topic-name">Кеңестік кезең: ГУЛАГ, тың игеру, репрессия</td>
+                            <td>17</td>
+                            <td><span class="probability-badge high">100.0%</span></td>
+                            <td>22.06, 25.06, 28.06</td>
+                            <td><div class="sample-question">1986 жылғы Желтоқсан оқиғасының негізгі себебі: КСРО басшылығының шешімі</div></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td class="topic-name">Қазақ ағартушылары, зиялылар</td>
+                            <td>16</td>
+                            <td><span class="probability-badge high">94.1%</span></td>
+                            <td>22.06, 23.06, 28.06, 29.06</td>
+                            <td><div class="sample-question">19 ғасыр зиялылары: Ш. Уәлиханов, Ы. Алтынсарин, А. Құнанбаев</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="probability-group">
+            <div class="group-title medium">🟠 ЖИІЛІГІ ЖОҒАРЫ (60-89%)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th style="width: 50px;">№</th><th>Тақырып</th><th style="width: 100px;">Саны</th><th style="width: 120px;">Ықтималдық</th><th>Күндер</th><th>Мысал сұрақ</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="topic-name">Ежелгі Қазақстан: сақтар, Алтын адам</td>
+                            <td>13</td>
+                            <td><span class="probability-badge medium">76.5%</span></td>
+                            <td>22.06, 25.06, 28.06, 29.06</td>
+                            <td><div class="sample-question">Климаттың құрғақтануы: Аридизация процесі</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. МАТЕМАТИКАЛЫҚ САУАТТЫЛЫҚ -->
+    <section class="subject-section" id="math">
+        <div class="subject-header">
+            <div class="subject-title">📘 Математикалық сауаттылық</div>
+            <div class="subject-stats">
+                <div class="sub-stat">Жазбалар: <strong>51</strong></div>
+                <div class="sub-stat">Тақырыптар: <strong>10</strong></div>
+            </div>
+        </div>
+
+        <div class="probability-group">
+            <div class="group-title high">🔴 ӘР СЫНАҚТА КЕЛЕТІН (90-100%)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th style="width: 50px;">№</th><th>Тақырып</th><th style="width: 100px;">Саны</th><th style="width: 120px;">Ықтималдық</th><th>Күндер</th><th>Есеп үлгісі</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td class="topic-name">Геометриялық есептер (аудан, периметр, көлем)</td>
+                            <td>9</td>
+                            <td><span class="probability-badge high">100.0%</span></td>
+                            <td>23.06, 24.06, 27.06, 28.06</td>
+                            <td><div class="sample-question">Ауладағы қоршаудың сыртқы ауданын өлшеу. Қатарда 12 кірпіш бар...</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="probability-group">
+            <div class="group-title medium">🟠 ЖИІЛІГІ ЖОҒАРЫ (60-89%)</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th style="width: 50px;">№</th><th>Тақырып</th><th style="width: 100px;">Саны</th><th style="width: 120px;">Ықтималдық</th><th>Күндер</th><th>Есеп үлгісі</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="topic-name">Тұрмыстық есептер (бояу, тұсқағаз, кірпіш)</td><td>8</td><td><span class="probability-badge medium">88.9%</span></td><td>23.06 - 28.06</td><td><div class="sample-question">Қоршау ауданы мен материал шығыны</div></td></tr>
+                        <tr><td>2</td><td class="topic-name">Жылдамдық, қашықтық, уақыт есептері</td><td>7</td><td><span class="probability-badge medium">77.8%</span></td><td>23.06, 24.06, 28.06</td><td><div class="sample-question">Қозғалыс графиктері мен кездесу уақыты</div></td></tr>
+                        <tr><td>3</td><td class="topic-name">Пайыз есептері</td><td>6</td><td><span class="probability-badge medium">66.7%</span></td><td>24.06, 27.06, 28.06</td><td><div class="sample-question">Тауардың бағасы 40%-ға өсіп, кейін 25%-ға төмендеді...</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ҚОРЫТЫНДЫ ЖӘНЕ ҰСЫНЫСТАР -->
+    <footer class="footer-card">
+        <h2>🎯 ҚОРЫТЫНДЫ ЖӘНЕ ҰСЫНЫСТАР</h2>
+        
+        <div class="recommendations-grid">
+            <div class="rec-item">
+                <h3 style="color: var(--color-high);">🔴 Қызыл деңгей</h3>
+                <p>Бұл тақырыптарға ерекше назар аударыңыз — олар әр жылғы және әр күннің сливтерінде 100% қайталанып тұр!</p>
+            </div>
+            <div class="rec-item">
+                <h3 style="color: var(--color-medium);">🟠 Қызғылт сары деңгей</h3>
+                <p>Міндетті түрде формулалары мен негізгі даталарын қайталаңыз — шығу ықтималдығы өте жоғары.</p>
+            </div>
+            <div class="rec-item">
+                <h3 style="color: var(--color-low);">🟡 Сары деңгей</h3>
+                <p>Сирек кездеседі, бірақ базада бар сұрақтар. Уақыт қалса қарап шыққан жөн.</p>
+            </div>
+            <div class="rec-item">
+                <h3 style="color: var(--color-spec);">🔵 Көк деңгей</h3>
+                <p>Спецификацияда ресми бекітілген, бірақ сливте көрінбеген. «Тосын сый» ретінде келу қаупі бар.</p>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            ⚠️ <strong>Ескерту:</strong> Бұл талдау тек жиналған сливтерге негізделген статистикалық болжам. Нақты емтихан кез келген тақырыпты қамтуы мүмкін. Сливтерге соқыр сенуге болмайды!
+        </div>
+
+        <div class="wishing-text">🍀 02.07.2026 ЕНТ-ке сәттілік тілейміз! Күшіңе сен! 🍀</div>
+    </footer>
+</div>
+
+</body>
+</html>
